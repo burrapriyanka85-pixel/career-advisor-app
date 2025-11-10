@@ -47,19 +47,3 @@ This project is designed to assist students and professionals in discovering pot
 git clone https://github.com/burrapriyanka85-pixel/career-advisor-app.git
 cd career-advisor-app
 
-2️⃣ Create a virtual environment (optional but recommended)
-python -m venv venv
-venv\Scripts\activate
-
-3️⃣ Install dependencies
-pip install -r requirements.txt
-
-4️⃣ Run the Streamlit app
-streamlit run app.py
-
-👩‍💻 Author
-
-Priyanka Burra
-🎓 Final Year M.Sc. Bioinformatics Project
-💡 Built using Python, Streamlit, and Pandas for data-driven career guidance and analytics.
-
