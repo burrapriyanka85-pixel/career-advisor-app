@@ -1,13 +1,25 @@
 # app.py
-import os
-import time
-import html
+"""
+Career & Skills Advisor — Soft Teal (AI and resume features removed)
+- No OpenAI usage or secret handling
+- No resume upload, no temporary API key sidebar
+- Clean modern UI, dark-mode toggle, CSV export
+Run:
+    cd /path/to/project
+    python -m venv venv           # create venv (if not created)
+    source venv/Scripts/activate  # windows git-bash: source venv/Scripts/activate
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
+    streamlit run app.py
+"""
 import streamlit as st
 import pandas as pd
+import time
+import html
 
 # ---------------- Page config ----------------
 st.set_page_config(
-    page_title="Career & Skills Advisor — Soft Teal (Dark Mode + AI)",
+    page_title="Career & Skills Advisor — Soft Teal",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -19,42 +31,42 @@ CAREER_MAP = {
         "skills": ["python", "sql", "excel", "statistics"],
         "resources": [
             {"title": "Data Analysis with Python (Coursera)", "url": "https://coursera.org"},
-            {"title": "SQL for Data Science (YouTube)", "url": "https://youtube.com"}
+            {"title": "SQL for Data Science (YouTube)", "url": "https://youtube.com"},
         ],
     },
     "Frontend Developer": {
         "skills": ["html", "css", "javascript", "react"],
         "resources": [
             {"title": "FreeCodeCamp Frontend Path", "url": "https://freecodecamp.org"},
-            {"title": "React Official Docs", "url": "https://react.dev"}
+            {"title": "React Official Docs", "url": "https://react.dev"},
         ],
     },
     "Backend Developer": {
         "skills": ["python", "django", "sql", "api"],
         "resources": [
             {"title": "Django for Beginners", "url": "https://djangoproject.com"},
-            {"title": "REST API Best Practices", "url": "https://restfulapi.net"}
+            {"title": "REST API Best Practices", "url": "https://restfulapi.net"},
         ],
     },
     "Machine Learning Engineer": {
         "skills": ["python", "ml", "pandas", "tensorflow"],
         "resources": [
             {"title": "Intro to ML (Coursera)", "url": "https://coursera.org"},
-            {"title": "Hands-on ML (GitHub)", "url": "https://github.com/ageron/handson-ml"}
+            {"title": "Hands-on ML (GitHub)", "url": "https://github.com/ageron/handson-ml"},
         ],
     },
     "Product Manager": {
         "skills": ["communication", "roadmapping", "analytics", "stakeholder management"],
         "resources": [
             {"title": "PM Foundations", "url": "https://coursera.org"},
-            {"title": "One-page product spec guide", "url": "https://medium.com"}
+            {"title": "One-page product spec guide", "url": "https://medium.com"},
         ],
     },
     "Cybersecurity Analyst": {
         "skills": ["networking", "linux", "security", "python"],
         "resources": [
             {"title": "Cybersecurity Basics", "url": "https://cybrary.it"},
-            {"title": "Linux Journey (Free)", "url": "https://linuxjourney.com"}
+            {"title": "Linux Journey (Free)", "url": "https://linuxjourney.com"},
         ],
     },
 }
@@ -66,6 +78,7 @@ def normalize(s: str) -> str:
 ALL_SKILLS = sorted({skill for v in CAREER_MAP.values() for skill in v["skills"]})
 
 def compute_suggestions(user_skills):
+    """Return sorted results (highest match first)."""
     results = []
     for career, data in CAREER_MAP.items():
         req = [normalize(x) for x in data["skills"]]
@@ -87,11 +100,12 @@ def inject_css(dark_mode: bool):
     if dark_mode:
         css = """
         <style>
-        .stApp { background: linear-gradient(180deg, #071418 0%, #071a1b 100%); color: #e6f7f6; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; }
+        :root { --accent: #7fe3da; --muted: rgba(230,247,246,0.75); --card-bg: rgba(10,25,25,0.86); }
+        html, body, .stApp { background: linear-gradient(180deg, #071418 0%, #071a1b 100%); color: #e6f7f6; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; }
         .card { background: linear-gradient(180deg, rgba(10,30,30,0.85), rgba(8,22,22,0.9)); border: 1px solid rgba(255,255,255,0.04); color: #e6f7f6; border-radius:12px; padding:16px; box-shadow: 0 6px 24px rgba(0,0,0,0.6); }
-        .section-header { color:#7fe3da; border-bottom:1px solid rgba(127,227,218,0.12); padding-bottom:6px; margin-bottom:12px; font-weight:700; font-size:18px; }
-        .muted { color: rgba(230,247,246,0.7); }
-        .pill { background: rgba(127,227,218,0.08); color:#7fe3da; padding:6px 10px; border-radius:999px; font-weight:600; margin-right:6px; display:inline-block; }
+        .section-header { color: var(--accent); border-bottom:1px solid rgba(127,227,218,0.12); padding-bottom:6px; margin-bottom:12px; font-weight:700; font-size:18px; }
+        .muted { color: var(--muted); }
+        .pill { background: rgba(127,227,218,0.08); color: #7fe3da; padding:6px 10px; border-radius:999px; font-weight:600; margin-right:6px; display:inline-block; }
         .stButton>button { background: linear-gradient(135deg,#0fb2a1,#018f88); color:white; border-radius:10px; padding:10px 16px; border:none; font-weight:700; }
         .stDownloadButton>button { background:#0fb2a1; color:white; border-radius:10px; padding:8px 12px; }
         @keyframes fadeInUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
@@ -102,21 +116,22 @@ def inject_css(dark_mode: bool):
     else:
         css = """
         <style>
-        .stApp { background: linear-gradient(180deg, #f6fbfb 0%, #ffffff 40%, #eef7f7 100%); color: #063737; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; }
-        .card { background: #ffffff; border: 1px solid #dfeff0; color: #063737; border-radius:12px; padding:18px; box-shadow: 0 8px 20px rgba(3,95,98,0.06); }
-        .section-header { color:#035f62; border-bottom:1px solid rgba(3,95,98,0.08); padding-bottom:6px; margin-bottom:12px; font-weight:700; font-size:18px; }
-        .muted { color: #5b7a79; }
-        .pill { background: rgba(15,163,165,0.08); color:#035f62; padding:6px 10px; border-radius:999px; font-weight:600; margin-right:6px; display:inline-block; }
+        :root { --accent: #035f62; --muted: #5b7a79; --card-bg: #ffffff; }
+        html, body, .stApp { background: linear-gradient(180deg, #f6fbfb 0%, #ffffff 40%, #eef7f7 100%); color: #063737; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; }
+        .card { background: var(--card-bg); border: 1px solid #dfeff0; color: #063737; border-radius:12px; padding:18px; box-shadow: 0 8px 20px rgba(3,95,98,0.06); }
+        .section-header { color: var(--accent); border-bottom:1px solid rgba(3,95,98,0.08); padding-bottom:6px; margin-bottom:12px; font-weight:700; font-size:18px; }
+        .muted { color: var(--muted); }
+        .pill { background: rgba(15,163,165,0.08); color:var(--accent); padding:6px 10px; border-radius:999px; font-weight:600; margin-right:6px; display:inline-block; }
         .stButton>button { background: linear-gradient(135deg,#0fa3a5,#0b7c7d); color:white; border-radius:10px; padding:10px 16px; border:none; font-weight:700; }
         .stDownloadButton>button { background:#0fa3a5; color:white; border-radius:10px; padding:8px 12px; }
         @keyframes fadeInUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
         .card.animated { animation: fadeInUp 450ms ease both; }
-        .streamlit-expanderHeader { color: #035f62 !important; font-weight:700 !important; }
+        .streamlit-expanderHeader { color: var(--accent) !important; font-weight:700 !important; }
         </style>
         """
     st.markdown(css, unsafe_allow_html=True)
 
-# ---------------- Sidebar controls ----------------
+# ---------------- Sidebar controls (clean, no AI / resume) ----------------
 with st.sidebar:
     st.markdown("## Profile & Settings")
     name = st.text_input("Name (optional)")
@@ -124,44 +139,13 @@ with st.sidebar:
     selected = st.multiselect("Select your skills", options=ALL_SKILLS)
     extras = st.text_input("Extra skills (comma-separated)", help="e.g., leadership, statistics")
     st.markdown("---")
-
     dark_mode = st.checkbox("Enable dark mode", value=False, help="Toggle dark mode for the UI")
-    enable_ai = st.checkbox("Enable AI personalized text (OpenAI)", value=False)
-    # NOTE: removed the direct API key input from sidebar for secure usage.
-    if enable_ai:
-        st.markdown("**AI Settings**", unsafe_allow_html=True)
-        model_choice = st.selectbox("Model (if available)", options=["gpt-4o-mini","gpt-4o-mini-2024","gpt-3.5-turbo"], index=2)
-        ai_length = st.slider("AI response length (tokens approx.)", 64, 600, 220)
-
     st.markdown("---")
     include_report = st.checkbox("Enable CSV report download", value=True)
-    st.caption("Tip: Provide skills above then click Suggest Careers. AI text requires OpenAI key configured via Streamlit Secrets or environment variable.")
+    st.caption("Tip: Provide skills above then click Suggest Careers. This clean build does not call any external AI services.")
 
-# apply CSS
+# Inject CSS based on dark mode toggle
 inject_css(dark_mode)
-
-# ---------------- Secure OpenAI key handling ----------------
-openai_key = None
-# Try to safely read Streamlit secrets without throwing if no secrets configured
-try:
-    # st.secrets may raise if no secrets file exists; protect it
-    if hasattr(st, "secrets"):
-        try:
-            # Use get if available; otherwise access dict key safely
-            secrets = st.secrets
-            if hasattr(secrets, "get"):
-                openai_key = secrets.get("OPENAI_API_KEY")
-            else:
-                # older behaviour: try indexing safely
-                openai_key = secrets["OPENAI_API_KEY"] if "OPENAI_API_KEY" in secrets else None
-        except Exception:
-            openai_key = None
-except Exception:
-    openai_key = None
-
-# fallback to environment variable local dev
-if not openai_key:
-    openai_key = os.getenv("OPENAI_API_KEY")
 
 # ---------------- Build user skills list ----------------
 user_skills = [normalize(s) for s in selected]
@@ -172,7 +156,7 @@ if extras:
 
 # ---------------- Main UI ----------------
 st.title("🚀 Career & Skills Advisor — Soft Teal")
-st.markdown("Discover role matches and a gap analysis. Use the dark mode toggle or enable AI for a personalized narrative.")
+st.markdown("Discover role matches and a gap analysis. Use the dark mode toggle in the sidebar for a different UI theme.")
 
 col1, col2 = st.columns([3, 1])
 with col1:
@@ -180,7 +164,7 @@ with col1:
     st.markdown("### Quick instructions")
     st.markdown("- Select your skills in the sidebar (or type extras).")
     st.markdown("- Click **Suggest Careers** to run the matching engine.")
-    st.markdown("- Enable AI to generate a short personalized summary (requires OpenAI key configured in Secrets).")
+    st.markdown("- Download the gap analysis as CSV if you want to save the results.")
     st.markdown("</div>", unsafe_allow_html=True)
 with col2:
     st.markdown("<div class='card'>", unsafe_allow_html=True)
@@ -195,30 +179,27 @@ st.write("")
 # ---------------- Action button ----------------
 clicked = st.button("🔍 Suggest Careers")
 
-# store last results for export
-if "last_results" not in st.session_state:
-    st.session_state["last_results"] = None
+# session storage for last results
+if "last_results_df" not in st.session_state:
+    st.session_state["last_results_df"] = None
 if "last_profile" not in st.session_state:
     st.session_state["last_profile"] = None
-if "ai_text" not in st.session_state:
-    st.session_state["ai_text"] = None
 
 if clicked:
     if not user_skills:
         st.warning("Please select or type at least one skill in the sidebar before running.")
     else:
         progress = st.progress(0)
-        for p in range(0, 50, 10):
+        for p in range(0, 51, 10):
             progress.progress(p)
             time.sleep(0.02)
 
         results = compute_suggestions(user_skills)
-        st.session_state["last_results"] = results
         st.session_state["last_profile"] = {"name": name, "goal": goal, "skills": user_skills}
-
         progress.progress(60)
         time.sleep(0.02)
 
+        # Top Matches (animated cards)
         st.markdown("<div class='section-header'>Top Matches</div>", unsafe_allow_html=True)
         cols = st.columns(3)
         for i, r in enumerate(results[:6]):
@@ -235,6 +216,7 @@ if clicked:
         progress.progress(80)
         time.sleep(0.02)
 
+        # Gap analysis DataFrame
         st.markdown("<div class='section-header'>Gap Analysis — Full List</div>", unsafe_allow_html=True)
         df = pd.DataFrame([{
             "Career": r["career"],
@@ -245,76 +227,15 @@ if clicked:
         st.dataframe(df, use_container_width=True)
 
         st.session_state["last_results_df"] = df
+
         if include_report:
             bts = df.to_csv(index=False).encode("utf-8")
             st.download_button("📥 Download Gap Analysis (CSV)", data=bts, file_name="career_report.csv", mime="text/csv")
 
-        progress.progress(95)
-        time.sleep(0.02)
-
-        # AI generation (optional)
-        st.session_state["ai_text"] = None
-        if enable_ai:
-            if not openai_key:
-                st.warning("AI is enabled but no OpenAI API key found. Configure OPENAI_API_KEY in Streamlit Secrets (recommended) or set the environment variable locally.")
-            else:
-                try:
-                    import openai
-                    openai.api_key = openai_key
-                    top_roles = [r["career"] for r in results[:3]]
-                    prompt = f"""
-You are a concise career coach. User name: {name or 'Candidate'}. Goal: {goal}.
-User skills: {', '.join(user_skills)}.
-Top role matches: {', '.join(top_roles)}.
-For each top role, write a short (2-4 sentence) personalized guidance paragraph: why they match, 3 focused next steps to close gaps, and 2 quick learning resources (title + short URL).
-Keep tone professional, encouraging, and actionable. Limit to about {ai_length} tokens.
-"""
-                    ai_placeholder = st.empty()
-                    ai_status = ai_placeholder.text("Generating personalized AI guidance...")
-                    ai_progress = st.progress(0)
-
-                    try:
-                        completion = openai.ChatCompletion.create(
-                            model=model_choice,
-                            messages=[{"role":"system","content":"You are a professional career coach."},
-                                      {"role":"user","content": prompt}],
-                            max_tokens=ai_length,
-                            temperature=0.7,
-                        )
-                        ai_text = completion.choices[0].message.content.strip()
-                    except Exception as e_chat:
-                        try:
-                            completion = openai.Completion.create(
-                                model=model_choice,
-                                prompt=prompt,
-                                max_tokens=ai_length,
-                                temperature=0.7,
-                            )
-                            ai_text = completion.choices[0].text.strip()
-                        except Exception as e2:
-                            ai_text = f"(AI generation failed: {str(e2)})"
-
-                    for p in range(0, 101, 25):
-                        ai_progress.progress(p)
-                        time.sleep(0.04)
-                    ai_status.text("AI guidance ready.")
-
-                    st.markdown("<div class='card'>", unsafe_allow_html=True)
-                    st.markdown("### Personalized AI Guidance")
-                    st.write(ai_text)
-                    st.markdown("</div>", unsafe_allow_html=True)
-                    st.session_state["ai_text"] = ai_text
-                except ModuleNotFoundError:
-                    st.error("`openai` library not installed. Install it in your venv (`pip install openai`) to enable AI features.")
-                except Exception as e:
-                    st.error(f"AI generation error: {str(e)}")
-        else:
-            st.info("AI personalization is disabled. Toggle 'Enable AI' in sidebar to generate a short personalized narrative using OpenAI.")
         progress.progress(100)
-        time.sleep(0.01)
-
+        time.sleep(0.02)
 else:
-    st.info("Select skills in the sidebar and click **Suggest Careers**. Optionally enable dark mode or AI in the sidebar.")
+    st.info("Select skills in the sidebar and click **Suggest Careers**. Optionally enable dark mode.")
 
 # ---------------- Export / last plan ----------------
 st.markdown("---")
@@ -323,12 +244,9 @@ if st.session_state.get("last_results_df") is not None:
     st.markdown("### Saved: Last generated plan")
     st.markdown(f"- **Name:** {html.escape(st.session_state['last_profile'].get('name','')) or '—'}")
     st.markdown(f"- **Saved skills:** {', '.join(st.session_state['last_profile'].get('skills',[])) or '—'}")
-    if st.session_state.get("ai_text"):
-        st.markdown("**AI summary available.**")
-        st.download_button("Download AI Summary (TXT)", data=st.session_state['ai_text'].encode("utf-8"), file_name="ai_summary.txt", mime="text/plain")
     csv_bytes = st.session_state["last_results_df"].to_csv(index=False).encode("utf-8")
     st.download_button("Download last plan (CSV)", data=csv_bytes, file_name="last_plan.csv", mime="text/csv")
     st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("Professional prototype — Soft Teal edition with Dark Mode + AI personalization. AI features require an OpenAI API key and network access.")
+st.caption("Professional prototype — Soft Teal edition. This version does not include AI or resume upload features.")
