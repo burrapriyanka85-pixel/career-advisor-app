@@ -1,23 +1,28 @@
-🚀 Career & Skills Advisor — Streamlit Cloud Edition
+Career & Skills Advisor — Streamlit Cloud Edition
 
-A simple and powerful Streamlit web app that recommends careers based on your skills. It analyzes your strengths, identifies missing skills, performs gap analysis, and generates a professional summary.
-You can run it fully offline or enable an optional Online AI mode for enhanced summaries.
+A professional, interactive Streamlit application that recommends careers based on user skills.
+The system evaluates strengths, identifies missing skills, performs role-based gap analysis, and generates a clear, structured summary along with a 3-month upskilling roadmap.
 
-This project is designed for students, job seekers, and professionals who want a quick and personalized career direction.
+The app supports:
 
-🌐 Live Demo (Streamlit Cloud)
+Soft Teal (No AI) — offline, template-based summary
 
-🔗 App Link:
-https://your-streamlit-cloud-link-here
+Online AI Mode — optional enhanced summaries (requires API key)
 
-(Replace with your actual deployed link.)
+Resume skill extraction (PDF / DOCX)
 
-✨ Features
-🎯 Career Matching
+Secure deployment on Streamlit Cloud
 
-Select your skills manually
+This project is designed for students, job seekers, and professionals looking for personalized career guidance.
 
-The app matches them with popular roles such as:
+Live Demo (Streamlit Cloud)
+
+https://career-advisor-app-hs3ebn6ftxmykronmzlp2f.streamlit.app/
+
+Key Features
+1. Career Matching Engine
+
+Matches selected skills with common technology roles:
 
 Data Analyst
 
@@ -27,73 +32,85 @@ Backend Developer
 
 Frontend Developer
 
-ML Engineer
+Machine Learning Engineer
 
 Product Manager
 
 Cybersecurity Analyst
 
-Shows Match %, Matched Skills, Missing Skills
+Outputs include:
 
-📊 Gap Analysis
+Match percentage
 
-Complete table of skill gaps
+Matched skills
 
-Identify what you need to learn next
+Missing skills
 
-Download results as CSV
+2. Comprehensive Gap Analysis
 
-🤖 Summary Generation
+Complete skills comparison for every supported role
 
-Two summary modes:
+Identification of missing technical and soft skills
 
-Mode	Description
-Soft Teal (No AI)	Local template-based summary (no external API calls)
-Online AI Mode	Uses an external AI provider only when you add your secret key
-📄 Resume Skill Extraction
+Downloadable CSV report
 
-Upload PDF or DOCX resumes
+3. Two Summary Modes
 
-Extracts skills safely and locally
+Soft Teal (No AI)
 
-No external server usage
+Default mode
 
-Auto-adds detected skills to your profile
+Uses offline template-based summary
 
-📥 Downloads
+No external API calls
 
-Summary (TXT)
+Online AI Mode (Optional)
 
-Gap Analysis (CSV)
+Generates AI-based summaries
 
-Saved plan from your last session
+Activated only when API key is added
 
-🔐 Privacy by Design
+Fully user-controlled
+
+4. Resume Skill Extraction
+
+Supports PDF and DOCX resume uploads
+
+Extracted skills are added automatically
 
 Resume content is processed in memory
 
-App does not store or send your data anywhere
+No external data storage or transmission
 
-Online AI mode is opt-in
+5. Downloadable Reports
 
-🧠 How It Works
+Career summary (TXT)
 
-Select Skills
-Choose skills manually or upload a resume to detect skills automatically.
+Gap analysis (CSV)
 
-Matching Engine
-Your skills are compared with role definitions and scored.
+Saved career plan snapshot (session-based)
 
-Gap Analysis Table
-See what you’re missing for each role.
+6. Privacy by Design
 
-Summary Generator
-Creates a career summary + 3-month development plan.
+User data is not stored or transmitted
 
-Download Reports
-Get your career report as CSV and summary as TXT.
+Resume text is not logged
 
-🧪 Technologies Used
+Online AI mode is optional and requires explicit setup
+
+How It Works
+
+Select skills manually or upload a resume.
+
+The system compares your skills to predefined role profiles.
+
+A full gap analysis is generated.
+
+The system produces a career summary with a 3-month plan.
+
+Reports can be downloaded for future reference.
+
+Technology Stack
 
 Python 3.x
 
@@ -105,48 +122,59 @@ PyPDF2
 
 python-docx
 
-Regex skill extraction
+Regex-based skill extraction
 
 Streamlit Cloud for hosting
 
-📦 Installation (Local Setup)
+Local Installation
 git clone https://github.com/burrapriyanka85-pixel/career-advisor-app.git
 cd career-advisor-app
 
+Create virtual environment
 python -m venv venv
-# Windows
+
+
+Windows:
+
 venv\Scripts\activate
-# macOS/Linux
+
+
+macOS/Linux:
+
 source venv/bin/activate
 
+Install dependencies
 pip install -r requirements.txt
 
+Run the application
 streamlit run app.py
 
 
-Then open 👉 http://localhost:8501
+Access locally at:
+http://localhost:8501
 
-☁️ Deployment on Streamlit Cloud
+Deploying on Streamlit Cloud
 
-Push your project to GitHub
+Push your repository to GitHub
 
-Visit https://share.streamlit.io
+Visit: https://share.streamlit.io
 
-Click New App
+Select New App
 
-Choose:
+Configure:
 
-Repo: burrapriyanka85-pixel/career-advisor-app
+Repository: burrapriyanka85-pixel/career-advisor-app
 
 Branch: main
 
-File: app.py
+File to run: app.py
 
-Deploy 🎉
+Deploy
 
-(Optional) Enable Online AI Mode
+Optional: Enable Online AI Mode
 
-Add your keys in:
+Add secrets in:
+
 App → Settings → Secrets
 
 Example:
@@ -154,7 +182,7 @@ Example:
 AI_API_KEY = "your_api_key_here"
 AI_PROVIDER = "openai"
 
-📁 Project Structure
+Project Structure
 career-advisor-app/
 │
 ├── app.py
@@ -165,11 +193,16 @@ career-advisor-app/
 └── local/
     └── logs/
 
-📸 Screenshots (Optional)
+Screenshots (Optional)
 
-Create a folder docs/screenshots/ and add images like:
+Create a folder:
 
-Home screen
+docs/screenshots/
+
+
+Suggested screenshots:
+
+Home Page
 
 Profile & Settings
 
@@ -177,25 +210,25 @@ Career Matches
 
 Gap Analysis
 
-Summary
+Summary Section
 
-🛠 Future Improvements
+Future Enhancements
 
 ATS resume scoring
 
-Role-specific salary insights
+Salary and market insights
 
-Skill heatmaps
+Skill heatmaps and visualizations
 
-AI-generated portfolio project ideas
+AI-generated portfolio project recommendations
 
 Company-specific role datasets
 
-📄 License
+License
 
-This project is released under the MIT License.
+This project is licensed under the MIT License.
 
-👩‍💻 Author
+Author
 
 Priyanka Burra
 M.Sc. Bioinformatics
