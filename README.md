@@ -1,129 +1,23 @@
-# 🚀 Career & Skills Advisor — Streamlit Cloud Edition
+🚀 Career & Skills Advisor — Streamlit Cloud Edition
 
-An interactive **Streamlit-powered career recommender** that analyzes user skills, provides role recommendations, performs gap analysis, and generates a professional summary — all running securely on **Streamlit Cloud**.
+A simple and powerful Streamlit web app that recommends careers based on your skills. It analyzes your strengths, identifies missing skills, performs gap analysis, and generates a professional summary.
+You can run it fully offline or enable an optional Online AI mode for enhanced summaries.
 
-This version supports **local template-based summaries**, **optional resume parsing (PDF / DOCX)**, and an **optional Online AI mode** that uses any AI API you configure through Streamlit Secrets.
+This project is designed for students, job seekers, and professionals who want a quick and personalized career direction.
 
----
+🌐 Live Demo (Streamlit Cloud)
 
-## 🌐 Live App (Streamlit Cloud)
+🔗 App Link:
+https://your-streamlit-cloud-link-here
 
-👉 **Live Demo:** https://your-streamlit-link-here  
-*(Replace with your actual Streamlit Cloud URL)*
+(Replace with your actual deployed link.)
 
-> 🛡️ By default, this app **does not send any data to external servers**.  
-> Online AI mode works **only** if you configure your own API key inside Streamlit Secrets.
+✨ Features
+🎯 Career Matching
 
----
+Select your skills manually
 
-## ✨ Features
-
-### 🎯 Core functionality
-- **Skill → Career Matching**
-- **Match % score** based on skills you have vs. role requirements
-- **Gap Analysis table** (missing skills + learning roadmap)
-- **Top 6 recommended roles**
-- **3-month upskilling plan** auto-generated
-
-### 📄 Resume Support (Built-in)
-- Upload **PDF / DOCX** resume
-- Extracts skills locally (no cloud upload)
-- Automatically adds detected skills into your profile
-
-### 🤖 Summaries (Two Modes)
-| Mode | Description |
-|------|-------------|
-| **Local AI** (default) | Template-based writing (offline) — no external calls |
-| **Online AI** (optional) | Uses an external AI provider ONLY if you add an API key in Streamlit Secrets |
-
-### 📥 Downloads
-- Export **Gap Analysis** as CSV  
-- Download **Summary** as TXT  
-- “Saved Plan” snapshot stored in session
-
-### 🔒 Privacy-Focused by Design
-- Resume text is parsed **locally on the server**
-- **Resume content is never stored** — only filename & skill count logged
-- No external API calls unless Online AI is configured
-
----
-
-## 🧪 Technologies
-
-| Technology | Purpose |
-|-----------|---------|
-| **Python 3.x** | Core logic |
-| **Streamlit** | UI framework |
-| **Pandas** | Data handling & analysis |
-| **PyPDF2** | Safe PDF parsing |
-| **python-docx** | DOCX parsing |
-| **Streamlit Cloud** | Hosting the app |
-
----
-
-## 🔧 How to Run Locally
-
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/burrapriyanka85-pixel/career-advisor-app.git
-cd career-advisor-app
-
-Create virtual environment
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-
-Install dependencies
-pip install -r requirements.txt
-
-4️⃣ Run the app
-streamlit run app.py
-
-
-App runs at:
-👉 http://localhost:8501
-
-☁️ Deploying to Streamlit Cloud (Steps)
-
-Push your repository to GitHub
-
-Go to: https://share.streamlit.io
-
-Click "New App"
-
-Select:
-
-Repository: burrapriyanka85-pixel/career-advisor-app
-
-Branch: main
-
-File: app.py
-
-Deploy
-
-(Optional) Configure Online AI in Streamlit → Settings → Secrets
-
-Example secrets:
-
-AI_API_KEY = "your_key_here"
-AI_PROVIDER = "openai"   # or any provider you use
-
-📝 Project Structure
-career-advisor-app/
-│
-├─ app.py                  # main application
-├─ requirements.txt        # dependencies
-├─ README.md               # documentation
-├─ LICENSE                 # MIT License
-├─ .gitignore              # Python ignores
-└─ local/logs              # auto-created minimal logs
-
-🧠 How It Works
-1. Skills → Careers
-
-Your skills are matched against internal job profiles such as:
+The app matches them with popular roles such as:
 
 Data Analyst
 
@@ -139,81 +33,170 @@ Product Manager
 
 Cybersecurity Analyst
 
-2. Scoring
-match % = (# matched skills / # required skills) * 100
+Shows Match %, Matched Skills, Missing Skills
 
-3. Local Summary Generation
+📊 Gap Analysis
 
-A summary is generated based on:
+Complete table of skill gaps
 
-detected skills
+Identify what you need to learn next
 
-top 3 roles
+Download results as CSV
 
-missing skills
+🤖 Summary Generation
 
-recommended actions
+Two summary modes:
 
-4. Resume Parsing (optional)
+Mode	Description
+Soft Teal (No AI)	Local template-based summary (no external API calls)
+Online AI Mode	Uses an external AI provider only when you add your secret key
+📄 Resume Skill Extraction
 
-Extracts skill keywords using regex word-boundaries
+Upload PDF or DOCX resumes
 
-Avoids incorrect matches (e.g., “java” inside “javascript”)
+Extracts skills safely and locally
 
-No storing or transmitting of resume data
+No external server usage
 
-🔐 Privacy & Security
+Auto-adds detected skills to your profile
 
-Resume files are processed in memory, not saved.
+📥 Downloads
 
-Only harmless metadata is logged (filename + skill count).
+Summary (TXT)
 
-No external calls occur unless Online AI mode is enabled.
+Gap Analysis (CSV)
 
-Recommended for internal/corporate use:
+Saved plan from your last session
 
-Protect behind login (SSO)
+🔐 Privacy by Design
 
-Host inside company VPN/VPC
+Resume content is processed in memory
 
-Use secure secrets management
+App does not store or send your data anywhere
 
-📚 Screenshots (Optional)
+Online AI mode is opt-in
 
-Create a folder: docs/screenshots/
+🧠 How It Works
 
-Suggested screenshots:
+Select Skills
+Choose skills manually or upload a resume to detect skills automatically.
 
-Home page
+Matching Engine
+Your skills are compared with role definitions and scored.
+
+Gap Analysis Table
+See what you’re missing for each role.
+
+Summary Generator
+Creates a career summary + 3-month development plan.
+
+Download Reports
+Get your career report as CSV and summary as TXT.
+
+🧪 Technologies Used
+
+Python 3.x
+
+Streamlit
+
+Pandas
+
+PyPDF2
+
+python-docx
+
+Regex skill extraction
+
+Streamlit Cloud for hosting
+
+📦 Installation (Local Setup)
+git clone https://github.com/burrapriyanka85-pixel/career-advisor-app.git
+cd career-advisor-app
+
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+streamlit run app.py
+
+
+Then open 👉 http://localhost:8501
+
+☁️ Deployment on Streamlit Cloud
+
+Push your project to GitHub
+
+Visit https://share.streamlit.io
+
+Click New App
+
+Choose:
+
+Repo: burrapriyanka85-pixel/career-advisor-app
+
+Branch: main
+
+File: app.py
+
+Deploy 🎉
+
+(Optional) Enable Online AI Mode
+
+Add your keys in:
+App → Settings → Secrets
+
+Example:
+
+AI_API_KEY = "your_api_key_here"
+AI_PROVIDER = "openai"
+
+📁 Project Structure
+career-advisor-app/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+├── .gitignore
+└── local/
+    └── logs/
+
+📸 Screenshots (Optional)
+
+Create a folder docs/screenshots/ and add images like:
+
+Home screen
 
 Profile & Settings
 
-Top Matches
+Career Matches
 
 Gap Analysis
 
 Summary
 
-🛠 Future Enhancements
-
-AI-based dynamic job descriptions
+🛠 Future Improvements
 
 ATS resume scoring
 
-Skill gap heatmaps
+Role-specific salary insights
 
-Portfolio project generator
+Skill heatmaps
 
-Company-specific job role integration
+AI-generated portfolio project ideas
+
+Company-specific role datasets
 
 📄 License
 
-This project is licensed under the MIT License.
-You are free to use, modify, and distribute with attribution.
+This project is released under the MIT License.
 
 👩‍💻 Author
 
 Priyanka Burra
 M.Sc. Bioinformatics
-
-
+GitHub: https://github.com/burrapriyanka85-pixel
